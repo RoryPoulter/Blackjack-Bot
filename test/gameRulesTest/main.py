@@ -1,4 +1,4 @@
-from random import randint
+# from random import randint  # Not used during testing
 from numpy import array
 
 
@@ -28,28 +28,31 @@ class Hand:
 
     def drawCard(self, new_card):
         """
-
+        Adds a card to the hand
         :param new_card: The last card drawn
         :type new_card: Card
-        :return:
         """
         self.cards.append(new_card)
         self.total += new_card.value
         self.checkTotal()
 
     def checkTotal(self):
-        if self.total[0] > 21:
+        """
+        Checks if the hand is still valid
+        :return: Whether the player is still in the game
+        :rtype: bool
+        """
+        if self.total[0] > 21:  # If the min total > 21
             print("Bust!")
             return False
-        elif self.total[1] > 21:
-            self.total[1] = self.total[0]
+        elif self.total[1] > 21:  # If the player has an ace and the max total > 21
+            self.total[1] = self.total[0]  # Sets the max total == min total
         return True
 
 
 class Card:
     def __init__(self, card_number):
         """
-
         :param card_number: Random number to determine suit and face
         :type card_number: int
         """
@@ -63,21 +66,21 @@ class Card:
 
 if __name__ == "__main__":
     SUITS = ["Spades", "Hearts", "Clubs", "Diamonds"]
-    FACES = {
-        0: ["Ace", array([1, 11])],
-        1: ["2", array([2, 2])],
-        2: ["3", array([3, 3])],
-        3: ["4", array([4, 4])],
-        4: ["5", array([5, 5])],
-        5: ["6", array([6, 6])],
-        6: ["7", array([7, 7])],
-        7: ["8", array([8, 8])],
-        8: ["9", array([9, 9])],
-        9: ["10", array([10, 10])],
-        10: ["Jack", array([10, 10])],
-        11: ["Queen", array([10, 10])],
-        12: ["King", array([10, 10])],
-    }
+    FACES = [
+        ["Ace", array([1, 11])],
+        ["2", array([2, 2])],
+        ["3", array([3, 3])],
+        ["4", array([4, 4])],
+        ["5", array([5, 5])],
+        ["6", array([6, 6])],
+        ["7", array([7, 7])],
+        ["8", array([8, 8])],
+        ["9", array([9, 9])],
+        ["10", array([10, 10])],
+        ["Jack", array([10, 10])],
+        ["Queen", array([10, 10])],
+        ["King", array([10, 10])],
+    ]
 
     card_1 = Card(2)
     print(card_1)
