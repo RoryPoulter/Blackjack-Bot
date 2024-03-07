@@ -13,9 +13,10 @@ class Hand:
             self.total += card.value
             self.checkTotal()
         self.cards: list[Card] = [*cards]
+        self.in_play: bool = True
 
     def __repr__(self):
-        return ", ".join(list(map(str, self.cards)))
+        return "|"+", ".join(list(map(str, self.cards)))+"|"
 
     def __int__(self):
         return self.total[1]
@@ -62,7 +63,7 @@ class Hand:
         """
         self.cards.append(new_card)
         self.total += new_card.value
-        self.checkTotal()
+        self.in_play = self.checkTotal()
 
     def checkTotal(self):
         """
@@ -71,43 +72,126 @@ class Hand:
         :rtype: bool
         """
         if self.total[0] > 21:  # If the min total > 21
-            print("Bust!")
             return False
         elif self.total[1] > 21:  # If the player has an ace and the max total > 21
             self.total[1] = self.total[0]  # Sets the max total == min total
         return True
 
     def split(self):
+        """
+        Splits the hand if the faces of the two cards are the same
+        :return: The hand with the second card
+        :rtype: Hand
+        :raise ValueError: If the hand does not have 2 cards of the same face
+        """
         if (self.cards[0].face == self.cards[1].face) and (len(self) == 2):
             second_hand: Hand = Hand(self.cards[1])
             self.total = self.cards[0].value
             self.cards = self.cards[:1]
             return second_hand
+        else:
+            raise ValueError("Hand must be 2 cards with the same face to split")
 
     def burn(self):
+        """
+        Draws a new hand of the same number of cards if the total is 14
+        :raise ValueError: If the total is not 14
+        """
         if self.total[1] == 14:
             no_of_cards: int = len(self)
             new_cards: dict[int, Card] = {}
             for i in range(no_of_cards):
-                new_cards[i] = Card(randint(0, 51))
+                new_cards[i] = Card()
             self.__init__(*new_cards.values())
+        else:
+            raise ValueError("Total must be 14 to burn")
 
 
 class Card:
-    def __init__(self, card_number):
-        """
-        :param card_number: Random number to determine suit and face
-        :type card_number: int
-        :raise ValueError: If card_number is out of range
-        """
-        if card_number > 51 or card_number < 0:
-            raise ValueError("card_number must be between 0 and 51 inclusive")
+    def __init__(self):
+        card_number = randint(0, 51)
         self.suit: str = SUITS[card_number // 13]
         self.face: str = FACES[card_number % 13][0]
         self.value: array = FACES[card_number % 13][1]
 
     def __str__(self):
         return f"{self.face} of {self.suit}"
+
+
+class Player:
+    def __init__(self):
+        self.in_play: bool = True
+        card_1: Card = Card()
+        print(card_1)
+        card_2: Card = Card()
+        print(card_2)
+        first_hand: Hand = Hand(card_1, card_2)
+        self.hands: list[Hand] = [first_hand]
+        self.hand_index: int = 0
+        self.max = self.hands[0].total[1]
+        if self.max == 21:
+            print("Blackjack!")
+
+    def maxTotal(self):
+        player_max = 0
+        for hand in self.hands:
+            player_max = max(player_max, hand.total[1])
+        self.max = player_max
+
+    def twist(self):
+        new_card: Card = Card()
+        print(new_card)
+        self.hands[self.hand_index].drawCard(new_card)
+        if self.hands[self.hand_index] > 21:
+            print("Bust!")
+            self.hands.pop(self.hand_index)
+            if self.hand_index >= len(self.hands):
+                self.hand_index = 0
+
+        if not self.hands:
+            print("Out of play!")
+            self.in_play = False
+        else:
+            print(self.hands)
+            self.maxTotal()
+            print(self.max)
+
+    def stick(self):
+        self.in_play = False
+
+    def burn(self):
+        self.hands[self.hand_index].burn()
+        print(self.hands)
+        self.maxTotal()
+        print(self.max)
+
+    def split(self):
+        new_hand: Hand = self.hands[self.hand_index].split()
+        self.hands.append(new_hand)
+        print(self.hands)
+        self.maxTotal()
+        print(self.max)
+
+    def changeHand(self):
+        self.hand_index = int(input("Which hand? "))
+
+    def turn(self):
+        print(self.hands)
+        choice: int = int(input("""Enter move: 
+    1. Twist
+    2. Stick
+    3. Burn
+    4. Split
+    5. Change hand
+"""))
+        moves: dict = {
+            1: self.twist,
+            2: self.stick,
+            3: self.burn,
+            4: self.split,
+            5: self.changeHand
+        }
+        moves.get(choice)()
 
 
 if __name__ == "__main__":
@@ -128,10 +212,6 @@ if __name__ == "__main__":
         ["King", array([10, 10])],
     ]
 
-    card_1: Card = Card(1)  # 2 of Spades
-    card_2: Card = Card(12)  # King of Spades
-    card_3: Card = Card(1)  # 2 of Spades
-    hand: Hand = Hand(card_1, card_2, card_3)
-    print(hand, hand.total)
-    hand.burn()
-    print(hand, hand.total)
+    user_player: Player = Player()
+    while user_player.in_play:
+        user_player.turn()
