@@ -10,21 +10,27 @@ class Hand:
         :param card_2: The second card drawn
         :type card_2: Card
         """
-        self.total = card_1.value + card_2.value
-        self.cards = [card_1, card_2]
+        self.total: array = card_1.value + card_2.value
+        self.cards: list[Card] = [card_1, card_2]
 
     def __repr__(self):
         return ", ".join(list(map(str, self.cards)))
 
+    def __int__(self):
+        return self.total[1]
+
     def __gt__(self, other):
         """
         Compares the totals of the hands
-        :param other: The other hand object
-        :type other: Hand
+        :param other: The other hand object or a number
+        :type other: Hand | int
         :return: whether the first hand has a greater total
         :rtype: bool
         """
-        return self.total[1] > other.total[1]
+        if type(other) is int:
+            return self.total[1] > other
+        else:
+            return self.total[1] > other.total[1]
 
     def drawCard(self, new_card):
         """
@@ -56,9 +62,9 @@ class Card:
         :param card_number: Random number to determine suit and face
         :type card_number: int
         """
-        self.suit = SUITS[card_number // 13]
-        self.face = FACES[card_number % 13][0]
-        self.value = FACES[card_number % 13][1]
+        self.suit: str = SUITS[card_number // 13]
+        self.face: str = FACES[card_number % 13][0]
+        self.value: array = FACES[card_number % 13][1]
 
     def __str__(self):
         return f"{self.face} of {self.suit}"
@@ -82,13 +88,14 @@ if __name__ == "__main__":
         ["King", array([10, 10])],
     ]
 
-    card_1 = Card(2)
+    card_1 = Card(0)
     print(card_1)
     card_2 = Card(11)
     print(card_2)
     hand = Hand(card_1, card_2)
     print(hand)
     print(hand.total)
-    card_3 = Card(12)
+    card_3 = Card(2)
     hand.drawCard(card_3)
+    print(hand)
     print(hand.total)
