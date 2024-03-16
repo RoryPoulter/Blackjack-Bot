@@ -85,7 +85,7 @@ class Hand:
         if self.total[0] > 21:  # If the min total > 21
             return False
         elif self.total[1] > 21:  # If the player has an ace and the max total > 21
-            self.total[1] = self.total[0]  # Sets the max total == min total
+            self.total[1] -= 10  # Sets the max total == min total
 
         if len(self) == 5:
             self.five_card = True
@@ -93,7 +93,7 @@ class Hand:
 
 
 if __name__ == "__main__":
-    hand: Hand = Hand(Card(), Card())
+    hand: Hand = Hand()
     print(hand)
     print(hand.total)
     hand.drawCard(Card())
