@@ -22,6 +22,8 @@ FACES: list[list[str, array]] = [
 
 class Card:
     def __init__(self):
+        """Constructor method
+        """
         card_number = randint(0, 51)
         self.suit: str = SUITS[card_number // 13]
         self.face: str = FACES[card_number % 13][0]
