@@ -1,60 +1,81 @@
-from card import Card
+from time import sleep
 from hand import Hand
 
 
-def decideWinner(player_hand, dealer_hand):
-    """
-    Determines the winner of the game
-    :param player_hand: The cards the player finished with
-    :type player_hand: Hand
-    :param dealer_hand: The cards the dealer finished with
-    :type dealer_hand: Hand
-    :return: Boolean value for if the player won
-    :rtype: bool
-    """
-    if len(dealer_hand) == 5:
-        return False
-    elif len(player_hand) == 5:
-        return True
-    else:
-        return player_hand > dealer_hand
+class Game:
+    def __init__(self):
+        """Constructor method
+        """
+        self.player_hand: Hand = Hand()
+        self.dealer_hand: Hand = Hand(dealer=True)
+
+        print("Player hand:")
+        self.player_hand.displayHand()
+        print("Dealer hand:")
+        self.dealer_hand.displayHand()
+
+        if self.dealer_hand.blackjack:
+            print(self.dealer_hand)
+            self.gameOver("dealer", "blackjack")
+        elif self.player_hand.blackjack:
+            self.gameOver("player", "blackjack")
+        else:
+            self.playerTurn()
+
+    def gameOver(self, winner, win_condition):
+        messages = {
+            "blackjack": f"{winner} won with blackjack!",
+            "5 card": f"{winner} won with 5 cord trick!",
+            "21": f"{winner} won with 21!",
+            "greater": f"{winner} won with {max(int(self.player_hand), int(self.dealer_hand))}!",
+            "bust": f"{winner} won by bust!"
+        }
+        print(messages[win_condition])
+
+    def decideWinner(self):
+        """Determines the winner of the game
+        """
+        if len(self.dealer_hand) == 5:
+            self.gameOver("dealer", "5 card")
+        elif len(self.player_hand) == 5:
+            self.gameOver("player", "5 card")
+        elif self.player_hand > self.dealer_hand:
+            self.gameOver("player", "greater")
+        else:
+            self.gameOver("dealer", "greater")
+
+    def playerTurn(self):
+        draw = input("Draw card? [y/n]: ").upper()
+        if draw == "Y":
+            sleep(0.5)
+            self.player_hand.drawCard()
+            print(self.player_hand)
+            if not self.player_hand.in_play:
+                print(self.dealer_hand)
+                self.gameOver("dealer", "bust")
+            elif (len(self.player_hand) == 5) or (self.player_hand == 21):
+                self.dealerTurn()
+            else:
+                self.playerTurn()
+        else:
+            self.dealerTurn()
+
+    def dealerTurn(self):
+        print(self.dealer_hand)
+        while self.dealer_hand < 17:
+            sleep(0.5)
+            self.dealer_hand.drawCard()
+            print(self.dealer_hand)
+        if self.dealer_hand == 21:
+            self.gameOver("dealer", "21")
+        elif self.dealer_hand > 21:
+            self.gameOver("player", "bust")
+        else:
+            self.decideWinner()
 
 
 def main():
-    print("---------------------")
-    player_hand: Hand = Hand()
-    dealer_hand: Hand = Hand()
-    print(player_hand)
-    if dealer_hand.blackjack:
-        print("Dealer wins")
-        return
-    elif player_hand.blackjack:
-        print("You win!")
-        return
-
-    in_play = True
-    while (player_hand < 21) and in_play and (len(player_hand) < 5):
-        in_play = input("Draw card? [Y/N]: ").upper() == "Y"
-        if in_play:
-            player_hand.drawCard(Card())
-            print(player_hand)
-            if player_hand > 21:
-                print("Dealer wins")
-                return
-
-    print(dealer_hand)
-    while (dealer_hand < 16) and (len(dealer_hand) < 5):
-        dealer_hand.drawCard(Card())
-        print(dealer_hand)
-        if dealer_hand > 21:
-            print("You win!")
-            return
-
-    player_won = decideWinner(player_hand, dealer_hand)
-    if player_won:
-        print("You win!")
-    else:
-        print("Dealer won")
+    Game()
 
 
 if __name__ == "__main__":
