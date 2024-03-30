@@ -66,8 +66,11 @@ class Game:
                 self.dealerTurn()
             else:
                 self.playerTurn()
-        else:
+        elif draw == "N":
             self.dealerTurn()
+        else:
+            print("Invalid input: enter either 'y' or 'n'")
+            self.playerTurn()
 
     def dealerTurn(self):
         """Dealer draws cards until their total is equal to or greater than 17
