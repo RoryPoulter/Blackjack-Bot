@@ -30,7 +30,7 @@ class Game:
         :param winner: Who won the game, either `'player'` or `'dealer'`
         :param win_condition: How the winner won the game
         """
-        messages = {
+        messages: dict[str, str] = {
             "blackjack": f"{winner} won with blackjack!",
             "5 card": f"{winner} won with 5 cord trick!",
             "21": f"{winner} won with 21!",
@@ -54,7 +54,7 @@ class Game:
     def playerTurn(self):
         """Allows the player to draw a card or end their turn
         """
-        draw = input("Draw card? [y/n]: ").upper()
+        draw: str = input("Draw card? [y/n]: ").upper()
         if draw == "Y":
             sleep(0.5)
             self.player_hand.drawCard()

@@ -18,9 +18,17 @@ class Hand:
         self.dealer: bool = dealer
 
     def __repr__(self):
+        """
+        :return: Formatted string with cards in hand and highest total
+        :rtype: str
+        """
         return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})"
 
     def __int__(self):
+        """Returns the total of the hand, higher value if there is an ace
+        :return: The higher total
+        :rtype: int
+        """
         return int(self.total[1])
 
     def __gt__(self, other):
@@ -103,7 +111,7 @@ if __name__ == "__main__":
     player_hand.drawCard()
     print(player_hand)
 
-    dealer_hand = Hand(dealer=True)
+    dealer_hand: Hand = Hand(dealer=True)
     dealer_hand.displayHand()
     dealer_hand.drawCard()
     print(dealer_hand)
