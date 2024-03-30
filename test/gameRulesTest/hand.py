@@ -11,8 +11,7 @@ class Hand:
         self.total: array = array([0, 0])
         self.cards: list[Card] = []
         for _ in range(2):
-            card: Card = Card()
-            self.drawCard(card)
+            self.drawCard()
         self.in_play: bool = True
         self.blackjack: bool = self == 21
         self.five_card: bool = False
@@ -22,7 +21,7 @@ class Hand:
         return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})"
 
     def __int__(self):
-        return self.total[1]
+        return int(self.total[1])
 
     def __gt__(self, other):
         """Compares the totals of the hands
@@ -67,11 +66,10 @@ class Hand:
         """
         return len(self.cards)
 
-    def drawCard(self, new_card):
+    def drawCard(self):
         """Adds a card to the hand
-        :param new_card: The last card drawn
-        :type new_card: Card
         """
+        new_card: Card = Card()
         self.cards.append(new_card)
         self.total += new_card.value
         self.in_play = self.checkTotal()
@@ -102,10 +100,10 @@ class Hand:
 if __name__ == "__main__":
     player_hand: Hand = Hand()
     player_hand.displayHand()
-    player_hand.drawCard(Card())
+    player_hand.drawCard()
     print(player_hand)
 
     dealer_hand = Hand(dealer=True)
     dealer_hand.displayHand()
-    dealer_hand.drawCard(Card())
+    dealer_hand.drawCard()
     print(dealer_hand)
