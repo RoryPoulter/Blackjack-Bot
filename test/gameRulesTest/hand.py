@@ -3,7 +3,11 @@ from card import Card
 
 
 class Hand:
-    def __init__(self):
+    def __init__(self, dealer=False):
+        """Constructor method
+        :param dealer: If the hand belongs to the dealer, `False` by default
+        :type dealer: bool
+        """
         self.total: array = array([0, 0])
         self.cards: list[Card] = []
         for _ in range(2):
@@ -12,6 +16,7 @@ class Hand:
         self.in_play: bool = True
         self.blackjack: bool = self == 21
         self.five_card: bool = False
+        self.dealer: bool = dealer
 
     def __repr__(self):
         return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})"
@@ -20,8 +25,7 @@ class Hand:
         return self.total[1]
 
     def __gt__(self, other):
-        """
-        Compares the totals of the hands
+        """Compares the totals of the hands
         :param other: The other hand object or a number
         :type other: Hand | int
         :return: whether the first hand has a greater total
@@ -33,8 +37,7 @@ class Hand:
             return self.total[1] > other.total[1]
 
     def __lt__(self, other):
-        """
-        Compares the totals of the hands
+        """Compares the totals of the hands
         :param other: The other hand object or a number
         :type other: Hand | int
         :return: whether the first hand has a greater total
@@ -46,8 +49,7 @@ class Hand:
             return self.total[1] < other.total[1]
 
     def __eq__(self, other):
-        """
-        Compares the totals of the hands
+        """Compares the totals of the hands
         :param other: The other hand object or a number
         :type other: Hand | int
         :return: whether the first hand has an equal total
@@ -59,16 +61,14 @@ class Hand:
             return self.total[1] == other.total[1]
 
     def __len__(self):
-        """
-        Finds the number cards in the hand
+        """Finds the number cards in the hand
         :return: The number of cards in the hand
         :rtype: int
         """
         return len(self.cards)
 
     def drawCard(self, new_card):
-        """
-        Adds a card to the hand
+        """Adds a card to the hand
         :param new_card: The last card drawn
         :type new_card: Card
         """
@@ -77,8 +77,7 @@ class Hand:
         self.in_play = self.checkTotal()
 
     def checkTotal(self):
-        """
-        Checks if the hand is still valid
+        """Checks if the hand is still valid
         :return: Whether the player is still in the game
         :rtype: bool
         """
@@ -91,11 +90,22 @@ class Hand:
             self.five_card = True
         return True
 
+    def displayHand(self):
+        """Displays the cards drawn at the start of the game, hides second card for dealer's hand
+        """
+        if self.dealer:
+            print("|" + str(self.cards[0]) + "|")
+        else:
+            print("|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})")
+
 
 if __name__ == "__main__":
-    hand: Hand = Hand()
-    print(hand)
-    print(hand.total)
-    hand.drawCard(Card())
-    print(hand)
-    print(hand.total)
+    player_hand: Hand = Hand()
+    player_hand.displayHand()
+    player_hand.drawCard(Card())
+    print(player_hand)
+
+    dealer_hand = Hand(dealer=True)
+    dealer_hand.displayHand()
+    dealer_hand.drawCard(Card())
+    print(dealer_hand)
