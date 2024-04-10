@@ -1,3 +1,7 @@
+"""Example code for how the rules of the game will be applied.
+Real code will need to be different as cards will not be generated randomly but instead drawn from a physical deck and
+read by a camera. `Game` class will need to have 3 parameters for the revealed dealer card and the 2 player cards.
+"""
 from time import sleep
 from hand import Hand
 from typing import Literal
