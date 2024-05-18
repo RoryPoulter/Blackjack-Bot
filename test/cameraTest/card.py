@@ -41,6 +41,6 @@ class Card:
 
 
 if __name__ == "__main__":
-    card: Card = Card("A", "♣")
+    card: Card = Card("8", "♦")
     print(card)
     print(card.value)

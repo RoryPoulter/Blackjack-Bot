@@ -5,7 +5,11 @@ from time import sleep
 
 
 def main():
-    camera = PiCamera()  # Creates PiCamera object
+    try:
+        camera = PiCamera()  # Creates PiCamera object
+    except Exception:
+        print("Error: Camera not connected")
+        return
     camera.start_preview()  # Turns on the camera
     sleep(5)  # Waits 5 seconds
     camera.stop_preview()  # Turns off the camera
