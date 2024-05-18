@@ -1,46 +1,49 @@
 from numpy import array
+from random import choice
 
 
-SUITS: dict[str, str] = {
-    "♠": "Spades ♠",
-    "♥": "Hearts ♥",
-    "♣": "Clubs ♣",
-    "♦": "Diamonds ♦"
-}
 FACES: dict[str, list[str, array]] = {
-        "A": ["Ace", array([1, 11])],
-        "2": ["2", array([2, 2])],
-        "3": ["3", array([3, 3])],
-        "4": ["4", array([4, 4])],
-        "5": ["5", array([5, 5])],
-        "6": ["6", array([6, 6])],
-        "7": ["7", array([7, 7])],
-        "8": ["8", array([8, 8])],
-        "9": ["9", array([9, 9])],
-        "10": ["10", array([10, 10])],
-        "J": ["Jack", array([10, 10])],
-        "Q": ["Queen", array([10, 10])],
-        "K": ["King", array([10, 10])]
+        "A": ["Ace", 1 + 11j],
+        "2": ["2", 2 + 2j],
+        "3": ["3", 3 + 3j],
+        "4": ["4", 4 + 4j],
+        "5": ["5", 5 + 5j],
+        "6": ["6", 6 + 6j],
+        "7": ["7", 7 + 7j],
+        "8": ["8", 8 + 8j],
+        "9": ["9", 9 + 9j],
+        "10": ["10", 10 + 10j],
+        "J": ["Jack", 10 + 10j],
+        "Q": ["Queen", 10 + 10j],
+        "K": ["King", 10 + 10j]
 }
 
 
 class Card:
-    def __init__(self, face, suit):
+    def __init__(self, face):
         """Constructor method
         :param face: The face of the card
-        :type face: str:
-        :param suit: The suit of the card
-        :type suit: str
+        :type face: str
         """
-        self.suit: str = SUITS.get(suit)
         self.face: str = FACES.get(face)[0]
         self.value: array = FACES.get(face)[1]
-
+    
     def __str__(self):
-        return f"{self.face} of {self.suit}"
+        return self.face
+    
+    def __add__(self, card):
+        """
+        :param card: The other card
+        :type card: Card
+        """
+        return self.value + card.value
 
 
 if __name__ == "__main__":
-    card: Card = Card("8", "♦")
-    print(card)
-    print(card.value)
+    card_1: Card = Card(choice(list(FACES.keys())))
+    print(card_1)
+    print(card_1.value)
+    card_2: Card = Card(choice(list(FACES.keys())))
+    print(card_2)
+    print(card_2.value)
+    print(card_1 + card_2)
