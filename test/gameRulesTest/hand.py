@@ -1,4 +1,3 @@
-from numpy import array
 from card import Card
 
 
@@ -8,7 +7,7 @@ class Hand:
         :param dealer: If the hand belongs to the dealer, `False` by default
         :type dealer: bool
         """
-        self.total: array = array([0, 0])
+        self.total: complex = 0 + 0j
         self.cards: list[Card] = []
         for _ in range(2):
             self.drawCard()
@@ -22,14 +21,14 @@ class Hand:
         :return: Formatted string with cards in hand and highest total
         :rtype: str
         """
-        return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})"
+        return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total.imag})"
 
     def __int__(self):
         """Returns the total of the hand, higher value if there is an ace
         :return: The higher total
         :rtype: int
         """
-        return int(self.total[1])
+        return int(self.total.imag)
 
     def __gt__(self, other):
         """Compares the totals of the hands
@@ -39,9 +38,9 @@ class Hand:
         :rtype: bool
         """
         if type(other) is int:
-            return self.total[1] > other
+            return self.total.imag > other
         else:
-            return self.total[1] > other.total[1]
+            return self.total.imag > other.total.imag
 
     def __lt__(self, other):
         """Compares the totals of the hands
@@ -51,9 +50,9 @@ class Hand:
         :rtype: bool
         """
         if type(other) is int:
-            return self.total[1] < other
+            return self.total.imag < other
         else:
-            return self.total[1] < other.total[1]
+            return self.total.imag < other.total.imag
 
     def __eq__(self, other):
         """Compares the totals of the hands
@@ -63,9 +62,9 @@ class Hand:
         :rtype: bool
         """
         if type(other) is int:
-            return self.total[1] == other
+            return self.total.imag == other
         else:
-            return self.total[1] == other.total[1]
+            return self.total.imag == other.total.imag
 
     def __len__(self):
         """Finds the number cards in the hand
@@ -87,10 +86,10 @@ class Hand:
         :return: Whether the player is still in the game
         :rtype: bool
         """
-        if self.total[0] > 21:  # If the min total > 21
+        if self.total.real > 21:  # If the min total > 21
             return False
-        elif self.total[1] > 21:  # If the player has an ace and the max total > 21
-            self.total[1] -= 10  # Sets the max total == min total
+        elif self.total.imag > 21:  # If the player has an ace and the max total > 21
+            self.total -= 10j  # Sets the max total == min total
 
         if len(self) == 5:
             self.five_card = True
@@ -102,7 +101,7 @@ class Hand:
         if self.dealer:
             print("|" + str(self.cards[0]) + "|")
         else:
-            print("|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total[1]})")
+            print("|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total.imag})")
 
 
 if __name__ == "__main__":
