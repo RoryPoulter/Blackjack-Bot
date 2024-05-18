@@ -3,4 +3,4 @@ picamera
 pillow
 pytesseract
 imutils
-opencv-python==3.4.13.47
+opencv-python==4.3.0.38
