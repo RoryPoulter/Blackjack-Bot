@@ -1,4 +1,5 @@
-"""Test file for text recognition in an image"""
+"""Test file for text recognition in an image
+Code from: https://tutorials-raspberrypi.com/raspberry-pi-text-recognition-ocr/"""
 #TODO AI image recognition to read card faces; train model with images
 
 import pytesseract

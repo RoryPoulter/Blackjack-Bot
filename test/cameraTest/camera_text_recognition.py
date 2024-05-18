@@ -1,3 +1,6 @@
+"""Test file for text recognition in a camera feed
+Code from: https://tutorials-raspberrypi.com/raspberry-pi-text-recognition-ocr/"""
+
 import cv2
 import pytesseract
 from pytesseract import Output
