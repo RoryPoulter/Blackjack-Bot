@@ -1,40 +1,46 @@
 from numpy import array
-from random import randint
 
 
-SUITS: list[str] = ["Spades ♠", "Hearts ♥", "Clubs ♣", "Diamonds ♦"]
-FACES: list[list[str, array]] = [
-        ["Ace", array([1, 11])],
-        ["2", array([2, 2])],
-        ["3", array([3, 3])],
-        ["4", array([4, 4])],
-        ["5", array([5, 5])],
-        ["6", array([6, 6])],
-        ["7", array([7, 7])],
-        ["8", array([8, 8])],
-        ["9", array([9, 9])],
-        ["10", array([10, 10])],
-        ["Jack", array([10, 10])],
-        ["Queen", array([10, 10])],
-        ["King", array([10, 10])]
-]
+SUITS: dict[str, str] = {
+    "♠": "Spades ♠",
+    "♥": "Hearts ♥",
+    "♣": "Clubs ♣",
+    "♦": "Diamonds ♦"
+}
+FACES: dict[str, list[str, array]] = {
+        "A": ["Ace", array([1, 11])],
+        "2": ["2", array([2, 2])],
+        "3": ["3", array([3, 3])],
+        "4": ["4", array([4, 4])],
+        "5": ["5", array([5, 5])],
+        "6": ["6", array([6, 6])],
+        "7": ["7", array([7, 7])],
+        "8": ["8", array([8, 8])],
+        "9": ["9", array([9, 9])],
+        "10": ["10", array([10, 10])],
+        "J": ["Jack", array([10, 10])],
+        "Q": ["Queen", array([10, 10])],
+        "K": ["King", array([10, 10])]
+}
 
 
 class Card:
-    def __init__(self, value):
+    def __init__(self, face, suit):
         """Constructor method
-        :param value: The value to identify the card, 0-51
-        :type value: int
+        :param face: The face of the card
+        :type face: str:
+        :param suit: The suit of the card
+        :type suit: str
         """
-        self.suit: str = SUITS[value // 13]
-        self.face: str = FACES[value % 13][0]
-        self.value: array = FACES[value % 13][1]
+        self.suit: str = SUITS.get(suit)
+        self.face: str = FACES.get(face)[0]
+        self.value: array = FACES.get(face)[1]
 
     def __str__(self):
         return f"{self.face} of {self.suit}"
 
 
 if __name__ == "__main__":
-    card: Card = Card(randint(0, 51))
+    card: Card = Card("A", "♣")
     print(card)
     print(card.value)
