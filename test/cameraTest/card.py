@@ -2,7 +2,7 @@ from numpy import array
 from random import choice
 
 
-FACES: dict[str, list[str, array]] = {
+FACES: dict[str, list[str, complex]] = {
         "A": ["Ace", 1 + 11j],
         "2": ["2", 2 + 2j],
         "3": ["3", 3 + 3j],
@@ -26,7 +26,7 @@ class Card:
         :type face: str
         """
         self.face: str = FACES.get(face)[0]
-        self.value: array = FACES.get(face)[1]
+        self.value: complex = FACES.get(face)[1]
     
     def __str__(self):
         return self.face
