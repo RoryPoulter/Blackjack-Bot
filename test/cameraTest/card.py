@@ -1,4 +1,3 @@
-from numpy import array
 from random import choice
 
 
