@@ -7,8 +7,7 @@ import numpy as np
 from pytesseract import Output
 import cv2
 
-img_source = cv2.imread("coffee.jpg")
-
+img_source = cv2.imread("test/cameraTest/coffee.jpg")
 
 def getGreyscale(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
