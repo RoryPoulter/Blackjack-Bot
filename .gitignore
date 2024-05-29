@@ -2,3 +2,4 @@
 *__pycache__
 /test/setupTest/test.sh
 sources.txt
+/.build/setup.cmd
