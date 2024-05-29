@@ -13,7 +13,19 @@ while True:
     # Capture frame-by-frame
     ret, frame = cap.read()
     
-    d= pytesseract.image_to_data(frame, output_type=Output.DICT)
+    try:
+        d= pytesseract.image_to_data(frame, output_type=Output.DICT)
+    except Exception:
+        print("""Error: Camera not detected.
+If a camera is not installed: 
+    1. Turn off Raspberry Pi
+    2. Install camera
+    3. Turn back on.
+If a camera is installed:
+    1. Type 'sudo raspi-config' in the terminal
+    2. Select 'Interface Options'
+    3. Enable Legacy Camera support""")
+        quit()
     n_boxes = len(d["text"])
     for i in range(n_boxes):
         if int(d["conf"][i]) > 60:
