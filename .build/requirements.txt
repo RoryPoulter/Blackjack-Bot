@@ -3,3 +3,6 @@ picamera
 pillow
 pytesseract
 imutils
+torch
+torchvision
+torchaudio
