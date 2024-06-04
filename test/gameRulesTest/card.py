@@ -1,5 +1,6 @@
-from random import randint
+"""Module storing custom Card class"""
 
+from random import randint
 
 SUITS: list[str] = ["Spades ♠", "Hearts ♥", "Clubs ♣", "Diamonds ♦"]
 FACES: list[list[str, complex]] = [

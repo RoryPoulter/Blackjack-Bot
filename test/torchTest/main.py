@@ -1,11 +1,11 @@
 import time
 
 import torch
-import numpy as np
+# import numpy as np
 from torchvision import models, transforms
 
 import cv2
-from PIL import Image
+# from PIL import Image
 
 torch.backends.quantized.engine = "qnnpack"
 
@@ -23,12 +23,12 @@ net = models.quantization.mobilenet_v2(pretrained=True, quantize=True)
 # jit model to take it from ~20fps to ~30fps
 net = torch.jit.script(net)
 
-started = time.time()
-last_logged = time.time()
-frame_count = 0
+started: float = time.time()
+last_logged: float = time.time()
+frame_count: int = 0
 
-count = 0
-total = 0
+count: int = 0
+total: int = 0
 
 with torch.no_grad():
     while count < 60:
@@ -59,5 +59,4 @@ with torch.no_grad():
             last_logged = now
             frame_count = 0
             count += 1
-    
     print(f"Average fps: {total / count}")

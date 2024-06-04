@@ -4,7 +4,6 @@ a physical deck and read by a camera. `Game` class will need to have 3 parameter
 dealer card and the 2 player cards.
 """
 from time import sleep
-from typing import Literal
 
 from hand import Hand
 
@@ -35,7 +34,7 @@ class Game:
 
         Args:
             winner (Literal["Player", "Dealer"]): Who won the game
-            win_condition (Literal["blackjack", "5 card", "21", "greater", "bust"]): How the winner won the game
+            win_condition (Literal["blackjack", "5 card", "21", "greater", "bust"]): How the game was won
         """
         messages: dict[str, str] = {
             "blackjack": f"{winner} won with blackjack!",

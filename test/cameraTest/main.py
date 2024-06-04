@@ -1,23 +1,19 @@
-"""Test for using the RaspberryPi camera to read the faces of the cards and create objects from the data"""
+"""Test for using the RaspberryPi camera to read the faces of the cards and create objects from the 
+data. Currently does not read text on cards."""
 # import card
 from time import sleep
 
 from picamera import PiCamera
 
+from error import cameraError
 
 def main():
+    """The main body of code
+    """
     try:
         camera = PiCamera()  # Creates PiCamera object
     except Exception:
-        print("""Error: Camera not detected.
-If a camera is not installed: 
-    1. Turn off Raspberry Pi
-    2. Install camera
-    3. Turn back on.
-If a camera is installed:
-    1. Type 'sudo raspi-config' in the terminal
-    2. Select 'Interface Options'
-    3. Enable Legacy Camera support""")
+        cameraError()
         return
     camera.start_preview()  # Turns on the camera
     sleep(5)  # Waits 5 seconds

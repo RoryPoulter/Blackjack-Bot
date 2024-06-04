@@ -1,3 +1,5 @@
+"""Module storing custom Hand class"""
+
 from card import Card
 
 
