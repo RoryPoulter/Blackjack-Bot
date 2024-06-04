@@ -20,6 +20,8 @@ FACES: list[list[str, complex]] = [
 
 
 class Card:
+    """Class for the cards in play
+    """
     def __init__(self):
         """Constructor method
         """

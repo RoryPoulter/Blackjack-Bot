@@ -1,13 +1,16 @@
 """Example code for how the rules of the game will be applied.
-Real code will need to be different as cards will not be generated randomly but instead drawn from a physical deck and
-read by a camera. `Game` class will need to have 3 parameters for the revealed dealer card and the 2 player cards.
+Real code will need to be different as cards will not be generated randomly but instead drawn from 
+a physical deck and read by a camera. `Game` class will need to have 3 parameters for the revealed 
+dealer card and the 2 player cards.
 """
 from time import sleep
-from hand import Hand
 from typing import Literal
 
+from hand import Hand
 
 class Game:
+    """The game
+    """
     def __init__(self):
         """Constructor method
         """
@@ -27,12 +30,12 @@ class Game:
         else:
             self.playerTurn()
 
-    def gameOver(self,
-                 winner: Literal["Player", "Dealer"],
-                 win_condition: Literal["blackjack", "5 card", "21", "greater", "bust"]):
-        """Displays a message at the end of the game detailing who won and how
-        :param winner: Who won the game, either `'player'` or `'dealer'`
-        :param win_condition: How the winner won the game
+    def gameOver(self, winner, win_condition):
+        """Displays the game over message
+
+        Args:
+            winner (Literal["Player", "Dealer"]): Who won the game
+            win_condition (Literal["blackjack", "5 card", "21", "greater", "bust"]): How the winner won the game
         """
         messages: dict[str, str] = {
             "blackjack": f"{winner} won with blackjack!",

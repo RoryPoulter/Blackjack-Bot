@@ -21,8 +21,9 @@ FACES: dict[str, list[str, complex]] = {
 class Card:
     def __init__(self, face):
         """Constructor method
-        :param face: The face of the card
-        :type face: str
+
+        Args:
+            face (str): the face of the card
         """
         self.face: str = FACES.get(face)[0]
         self.value: complex = FACES.get(face)[1]

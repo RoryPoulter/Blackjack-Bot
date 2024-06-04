@@ -9,20 +9,53 @@ import cv2
 
 img_source = cv2.imread("test/cameraTest/coffee.jpg")
 
+
 def getGreyscale(image):
+    """Converts the original image to a greyscale version
+
+    Args:
+        image (MatLike): The original image
+
+    Returns:
+        MatLike: The greyscale image
+    """
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 
 def thresholding(image):
+    """Converts the greyscale image to a binary image (black and white)
+
+    Args:
+        image (MatLike): The greyscale image
+
+    Returns:
+        MatLike: The binary image
+    """
     return cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
 
 
 def opening(image):
+    """Smooths the borders of the greyscale image
+
+    Args:
+        image (MatLike): The greyscale image
+
+    Returns:
+        MatLike: The opening of the image
+    """
     kernel = np.ones((5, 5), np.uint8)
     return cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
 
 
 def canny(image):
+    """Identifies the edges in an image
+
+    Args:
+        image (MatLike): The greyscale image
+
+    Returns:
+        MatLike: The canny image
+    """
     return cv2.Canny(image, 100, 200)
 
 

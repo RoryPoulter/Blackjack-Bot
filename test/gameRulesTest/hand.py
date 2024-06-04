@@ -2,10 +2,13 @@ from card import Card
 
 
 class Hand:
+    """The hand to store the cards.
+    """
     def __init__(self, dealer=False):
         """Constructor method
-        :param dealer: If the hand belongs to the dealer, `False` by default
-        :type dealer: bool
+
+        Args:
+            dealer (bool, optional): If the hand belongs to the dealer. Defaults to False.
         """
         self.total: complex = 0 + 0j
         self.cards: list[Card] = []
@@ -17,59 +20,65 @@ class Hand:
         self.dealer: bool = dealer
 
     def __repr__(self):
-        """
-        :return: Formatted string with cards in hand and highest total
-        :rtype: str
+        """Formats the cards in the hand and the total in a string representation
+
+        Returns:
+            str: The formatted string
         """
         return "|"+", ".join(list(map(str, self.cards)))+"| "+f"({self.total.imag})"
 
     def __int__(self):
-        """Returns the total of the hand, higher value if there is an ace
-        :return: The higher total
-        :rtype: int
+        """Returns the higher total of the hand
+
+        Returns:
+            int: The total of the hand
         """
         return int(self.total.imag)
 
     def __gt__(self, other):
-        """Compares the totals of the hands
-        :param other: The other hand object or a number
-        :type other: Hand | int
-        :return: whether the first hand has a greater total
-        :rtype: bool
+        """Checks if the value of the hand is greater than a given value
+
+        Args:
+            other (int, Hand): The value being compared with the hand
+
+        Returns:
+            bool: True if greater than the other value, else False
         """
-        if type(other) is int:
+        if isinstance(other, int):
             return self.total.imag > other
-        else:
-            return self.total.imag > other.total.imag
+        return self.total.imag > other.total.imag
 
     def __lt__(self, other):
-        """Compares the totals of the hands
-        :param other: The other hand object or a number
-        :type other: Hand | int
-        :return: whether the first hand has a greater total
-        :rtype: bool
+        """Checks if the value of the hand is less than a given value
+
+        Args:
+            other (int, Hand): The value being compared with the hand
+
+        Returns:
+            bool: True if less than the other value, else False
         """
-        if type(other) is int:
+        if isinstance(other, int):
             return self.total.imag < other
-        else:
-            return self.total.imag < other.total.imag
+        return self.total.imag < other.total.imag
 
     def __eq__(self, other):
-        """Compares the totals of the hands
-        :param other: The other hand object or a number
-        :type other: Hand | int
-        :return: whether the first hand has an equal total
-        :rtype: bool
+        """Checks if the value of the hand is equal to a given value
+
+        Args:
+            other (int, Hand): The value being compared with the hand
+
+        Returns:
+            bool: True if equal to the other value, else False
         """
-        if type(other) is int:
+        if isinstance(other, int):
             return self.total.imag == other
-        else:
-            return self.total.imag == other.total.imag
+        return self.total.imag == other.total.imag
 
     def __len__(self):
-        """Finds the number cards in the hand
-        :return: The number of cards in the hand
-        :rtype: int
+        """Returns the size of the hand
+
+        Returns:
+            int: The number of cards in the hand
         """
         return len(self.cards)
 
@@ -82,9 +91,10 @@ class Hand:
         self.in_play = self.checkTotal()
 
     def checkTotal(self):
-        """Checks if the hand is still valid
-        :return: Whether the player is still in the game
-        :rtype: bool
+        """Checks if the player has bust
+
+        Returns:
+            bool: True if the hand is still in play, else False
         """
         if self.total.real > 21:  # If the min total > 21
             return False
