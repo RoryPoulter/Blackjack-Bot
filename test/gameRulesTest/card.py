@@ -34,6 +34,9 @@ class Card:
     def __str__(self):
         return f"{self.face} of {self.suit}"
 
+    def __int__(self):
+        return self.value.imag
+
 
 if __name__ == "__main__":
     card: Card = Card()

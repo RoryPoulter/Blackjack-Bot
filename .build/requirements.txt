@@ -6,3 +6,5 @@ imutils
 torch
 torchvision
 torchaudio
+opencv-python
+tesseract

@@ -100,7 +100,7 @@ class Hand:
         """
         if self.total.real > 21:  # If the min total > 21
             return False
-        elif self.total.imag > 21:  # If the player has an ace and the max total > 21
+        if self.total.imag > 21:  # If the player has an ace and the max total > 21
             self.total -= 10j  # Sets the max total == min total
 
         if len(self) == 5:

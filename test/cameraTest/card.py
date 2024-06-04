@@ -1,3 +1,4 @@
+"""Module for storing custom Card class"""
 from random import choice
 
 
@@ -19,6 +20,8 @@ FACES: dict[str, list[str, complex]] = {
 
 
 class Card:
+    """Class for the cards in play
+    """
     def __init__(self, face):
         """Constructor method
 
@@ -27,10 +30,10 @@ class Card:
         """
         self.face: str = FACES.get(face)[0]
         self.value: complex = FACES.get(face)[1]
-    
+
     def __str__(self):
         return self.face
-    
+
     def __add__(self, card):
         """
         :param card: The other card

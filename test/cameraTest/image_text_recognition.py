@@ -1,6 +1,6 @@
 """Test file for text recognition in an image
 Code from: https://tutorials-raspberrypi.com/raspberry-pi-text-recognition-ocr/"""
-# TODO AI image recognition to read card faces; train model with images
+# ! AI image recognition to read card faces; train model with images
 
 import pytesseract
 import numpy as np
@@ -10,7 +10,7 @@ import cv2
 img_source = cv2.imread("test/cameraTest/coffee.jpg")
 
 
-def getGreyscale(image):
+def greyscale(image):
     """Converts the original image to a greyscale version
 
     Args:
@@ -59,7 +59,7 @@ def canny(image):
     return cv2.Canny(image, 100, 200)
 
 
-grey = getGreyscale(img_source)
+grey = greyscale(img_source)
 thresh = thresholding(grey)
 opening = opening(grey)
 canny = canny(grey)
@@ -74,11 +74,12 @@ for img in [img_source, grey, thresh, opening, canny]:
 
     for i in range(n_boxes):
         if int(d["conf"][i]) > 60:
-            (text, x, y, w, h) = (d["text"][i], d["left"][i], d["top"][i], d["width"][i], d["height"][i])
+            (text, x, y, w, h) = (d["text"][i], d["left"][i], d["top"][i], d["width"][i],
+                                  d["height"][i])
             # don't show empty text
             if text and text.strip() != "":
                 img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                img = cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
+                img = cv2.putText(img, text, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.2,(0, 255, 0), 3)
 
     cv2.imshow("img", img)
     cv2.waitKey(0)
