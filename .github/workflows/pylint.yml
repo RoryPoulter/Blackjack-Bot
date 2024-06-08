@@ -19,6 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         pip install -r .build/requirements.txt
+        sudo apt-get update && upgrade
         sudo apt install python3-opencv
         pylint --extension-pkg-allow-list=cv2
     - name: Analysing the code with pylint
