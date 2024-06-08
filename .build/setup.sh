@@ -4,7 +4,7 @@ sudo apt update && sudo apt upgrade
 sudo apt install python3-opencv
 # Sets current directory to ~/.build/
 cd "$(dirname "$0")"
-cd ../../.build/ # Not in final version
+cd ../../.build/ # ! Not in final version
 # Installs the other dependencies
 sudo pip3 install -r requirements.txt
 # Changes the current directory to ~/src/

@@ -31,9 +31,9 @@ frame_count: int = 0
 
 count: int = 0
 total: int = 0
-
+torch.set_num_threads(2)
 with torch.no_grad():
-    while count < 60:
+    while count < 30:
         # read image
         ret, image = cap.read()
         if not ret:
@@ -57,8 +57,9 @@ with torch.no_grad():
         now = time.time()
         if now - last_logged > 1:
             total += frame_count / (now-last_logged)
-            # print(f"{frame_count / (now-last_logged)} fps")
+            print(f"{frame_count / (now-last_logged)} fps")
             last_logged = now
             frame_count = 0
             count += 1
     print(f"Average fps: {total / count}")
+ 

@@ -15,10 +15,10 @@ cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 while True:
     # Capture frame-by-frame
-    ret, frame = cap.read()   
+    ret, frame = cap.read()
     try:
         d= pytesseract.image_to_data(frame, output_type=Output.DICT)
-    except Exception:
+    except TypeError:
         cameraError()
         sys.exit()
     n_boxes = len(d["text"])
