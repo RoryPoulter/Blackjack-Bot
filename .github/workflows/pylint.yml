@@ -23,5 +23,5 @@ jobs:
         sudo apt install python3-opencv
     - name: Analysing the code with pylint
       run: |
-        pylint --extension-pkg-allow-list=cv2
+        pylint --extension-pkg-allow-list=cv2 $(git ls-files '*.py')
         pylint $(git ls-files '*.py')
