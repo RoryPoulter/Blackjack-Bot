@@ -108,6 +108,17 @@ def draw_random_card() -> Card:
 
 def draw_card(suit: str, face: str) -> Card:
     """Factory method for generating a specific card.
+
+    Args:
+        suit (str): The suit of the card.
+        face (str): The face of the card.
+
+    Raises:
+        ValueError: If the suit is not in `SUITS`.
+        ValueError: If the face is not in `FACES`.
+
+    Returns:
+        Card: The specified card object.
     """
     if suit not in SUITS:
         raise ValueError(f"{suit} is not a valid suit")
