@@ -1,0 +1,24 @@
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Blackjack-Bot"
+version = "0.1.0"
+description = "A Python program that plays blackjack using a Raspberry Pi and a webcam to read cards."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pylint",
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pylint.main]
+py-version = "3.12"
